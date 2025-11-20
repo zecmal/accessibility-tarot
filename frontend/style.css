@@ -1,0 +1,277 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: linear-gradient(to bottom right, #2a0e3c, #1b0f2a);
+  color: white;
+  position: relative;
+}
+
+/* Taustakuva */
+.background {
+  background-image: url("images/background.jpg");
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+/* Tähtisumu */
+.starfield {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 6s infinite ease-in-out;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* Blur-layer */
+.blur-layer {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(12px);
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 5;
+  transition: opacity 0.5s ease;
+}
+
+.blur-layer.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.blur-layer:not(.hidden) {
+  opacity: 1;
+}
+
+/* Overlay */
+.overlay {
+  text-align: center;
+  padding-top: 50px;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+input, button {
+  padding: 10px;
+  font-size: 1rem;
+  margin: 10px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* ✨ Kristallikuula */
+#crystalBall {
+  width: 220px;
+  height: 220px;
+  margin: 60px auto;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #cceeff, #223344);
+  box-shadow:
+    0 0 30px #88f,
+    0 0 60px #aaf inset,
+    0 0 80px #88f,
+    0 0 100px #ccf inset;
+  animation: shimmer 3s infinite ease-in-out, pulseBall 2s infinite ease-in-out;
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.5s ease;
+}
+
+#crystalBall.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes pulseBall {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0% {
+    box-shadow:
+      0 0 30px #88f,
+      0 0 60px #aaf inset,
+      0 0 80px #88f,
+      0 0 100px #ccf inset;
+  }
+  50% {
+    box-shadow:
+      0 0 40px #ccf,
+      0 0 80px #ddf inset,
+      0 0 100px #bbf,
+      0 0 120px #eef inset;
+  }
+  100% {
+    box-shadow:
+      0 0 30px #88f,
+      0 0 60px #aaf inset,
+      0 0 80px #88f,
+      0 0 100px #ccf inset;
+  }
+}
+
+/* Korttipöytä */
+#cardTable {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 40px;
+  gap: 20px;
+  z-index: 1;
+  position: relative;
+}
+
+/* Kortti */
+.card {
+  width: 200px;
+  height: 320px;
+  perspective: 1000px;
+  position: relative;
+  z-index: 1;
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.card-front img, .card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+/* Kortin ilmestymisanimaatio */
+.card.animate-in {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  opacity: 0;
+  z-index: 10;
+  animation: dealCard 2s ease forwards;
+}
+
+@keyframes dealCard {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0;
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.card-frame-back {
+  width: 100%;
+  height: 100%;
+  background-image: url("images/card-back-frame.png");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;;
+  align-items: center;
+  padding: 55px 20px 30px 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.card-title {
+  font-family: 'Georgia', serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f0d9a0;
+  margin-bottom: 12px;
+  position: relative;
+  padding-bottom: 8px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.card-title::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 2px;
+  background-color: #f0d9a0; /* sama kuin otsikon väri */
+  border-radius: 2px;
+}
+
+.card-text {
+  font-family: 'Georgia', serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  color:#f0d9a0;
+  max-width: 90%;
+  margin-bottom: 20px;
+}
+
